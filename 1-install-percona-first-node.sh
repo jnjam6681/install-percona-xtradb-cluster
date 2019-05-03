@@ -62,7 +62,7 @@ echo "------------------------------------------"
 
 # create replication user
 # echo "create replication user"
-# mysql -uroot -p -e "create user repuser@localhost identified by 'reppassword'"
+# mysql -uroot -p -e "create user sstuser@localhost identified by 'passw0rd'"
 # mysql -uroot -p -e "grant reload, replication client, process, lock tables on *.* to repuser@localhost"
 # mysql -uroot -p -e "flush privileges"
 # echo "create replication user success."
