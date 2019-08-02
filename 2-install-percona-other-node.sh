@@ -26,22 +26,29 @@ echo "------------------------------------------"
 echo "configure replication settings"
 cat >> /etc/mysql/my.cnf << EOF
 [mysqld]
-wsrep_provider=/usr/lib/libgalera_smm.so
-
-wsrep_cluster_name=pxc-cluster
+server_id=1
+binlog_format=ROW
+log_bin=mysql-bin
 wsrep_cluster_address=gcomm://${PXC_NODE1},${PXC_NODE2},${PXC_NODE3}
+wsrep_provider=/usr/lib/libgalera_smm.so
+datadir=/var/lib/mysql
 
+wsrep_slave_threads=1
+wsrep_cluster_name=pxc-cluster
+wsrep_sst_method=xtrabackup-v2
+wsrep_sst_auth=sstuser:passw0rd
 wsrep_node_name=${PXC_NAME}
 wsrep_node_address=${PXC_NODE2}
 
-wsrep_sst_method=xtrabackup-v2
-wsrep_sst_auth=sstuser:passw0rd
+log_slave_updates
 
 pxc_strict_mode=ENFORCING
 
-binlog_format=ROW
+
 default_storage_engine=InnoDB
 innodb_autoinc_lock_mode=2
+# innodb_buffer_pool_size=400M
+# innodb_log_file_size=64M
 EOF
 echo "settings /etc/mysql/my.cnf success."
 echo "------------------------------------------"
